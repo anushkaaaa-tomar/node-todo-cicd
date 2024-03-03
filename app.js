@@ -37,7 +37,7 @@ app.get('/todo', function (req, res) {
         let newTodo = sanitizer.escape(req.body.newtodo);
         if (req.body.newtodo != '') {
             todolist.push(newTodo);
-            this file is a new;
+            
         }
         res.redirect('/todo');
     })

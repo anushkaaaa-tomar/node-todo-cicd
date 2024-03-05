@@ -9,7 +9,7 @@ pipeline {
         }
         stage("Build & Test"){
             steps{
-                sh "docker build . -t node-app-test-new"
+                sh "docker build -t node-app-test-new ."
             }
         }
         stage("Push to DockerHub"){

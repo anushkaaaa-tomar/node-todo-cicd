@@ -1,6 +1,19 @@
 pipeline {
     agent any
-    
+    post {
+  success {
+    // Send email only on successful builds
+    emailext body: 'Build successful for job ${JOB_NAME}',
+             subject: 'Job ${J0B_NAME} - Build Success',
+             to: 'personalccount14@gmail.com'
+  }
+  failure {
+    // Send email on build failures
+    emailext body: 'Build failed for job ${JOB_NAME}',
+             subject: 'Job ${JOB_NAME} - Build Failure',
+             to: 'personalccount14@gmail.com'
+  }
+}
     stages{
         stage("Code"){
             steps{

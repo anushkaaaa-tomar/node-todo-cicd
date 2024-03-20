@@ -1,43 +1,42 @@
 pipeline {
     agent any
-    post {
-  success {
-    // Send email only on successful builds
-    emailext body: 'Build successful for job ${JOB_NAME}',
-             subject: 'Job ${J0B_NAME} - Build Success',
-             to: 'personalccount14@gmail.com'
-  }
-  failure {
-    // Send email on build failures
-    emailext body: 'Build failed for job ${JOB_NAME}',
-             subject: 'Job ${JOB_NAME} - Build Failure',
-             to: 'personalccount14@gmail.com'
-  }
-}
-    stages{
-        stage("Code"){
+    
+    stages {
+        stage("code"){
             steps{
-                git url: "https://github.com/anushkaaaa-tomar/node-todo-cicd.git", branch: "master"
+                git url: "https://github.com/LondheShubham153/node-todo-cicd.git", branch: "master"
+                echo "code is taken"
             }
+            
         }
-        stage("Build & Test"){
+        stage("build and test"){
             steps{
                 sh "docker build -t node-app-test-new ."
+                echo "code is build"
             }
         }
-        stage("Push to DockerHub"){
+        stage("image scan"){
             steps{
-                withCredentials([usernamePassword(credentialsId:"dockerHub",passwordVariable:"dockerHubPass",usernameVariable:"dockerHubUser")]){
-                    sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPass}"
-                    sh "docker tag node-app-test-new ${env.dockerHubUser}/node-app-test-new:latest"
-                    sh "docker push ${env.dockerHubUser}/node-app-test-new:latest" 
+                echo "scanned"
+            }
+        }
+        stage("push"){
+            steps{
+                withCredentials([usernamePassword(credentialsId:"dockerHub", passwordVariable:"dockerHubPass", usernameVariable:"dockerHubUser")]){
+                sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPass}"
+                sh "docker tag node-app-test-new:latest ${env.dockerHubUser}/node-app-test-new:latest"
+                sh "docker push ${env.dockerHubUser}/node-app-test-new:latest"
+                echo "code is pushed" 
                 }
             }
+            
         }
-        stage("Deploy"){
+        stage("deploy"){
             steps{
                 sh "docker-compose down && docker-compose up -d"
+                echo "code is deploy"
             }
+            
         }
     }
 }

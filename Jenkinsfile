@@ -43,7 +43,7 @@ pipeline {
                 success {
                     // Send email notification on successful builds
                     emailext (
-                        recipientList: 'recipient1@example.com, recipient2@example.com',
+                        recipientList: 'personalccount14@gmail.com',
                         subject: "${JOB_NAME} build - Successful",
                         body: """
                         Build '${JOB_NAME} - ${BUILD_NUMBER}' completed successfully.
@@ -55,7 +55,7 @@ pipeline {
                 failure {
                     // Send email notification on failed builds
                     emailext (
-                        recipientList: 'recipient1@example.com, recipient2@example.com',
+                        recipientList: 'personalccount14@gmail.com',
                         subject: "${JOB_NAME} build - Failed",
                         body: """
                         Build '${JOB_NAME} - ${BUILD_NUMBER}' failed.

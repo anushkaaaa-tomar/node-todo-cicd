@@ -38,34 +38,6 @@ pipeline {
             }
             
         }
-         stage('Post-Build Actions') {
-            post {
-                success {
-                    // Send email notification on successful builds
-                    emailext (
-                        recipientList: 'personalccount14@gmail.com',
-                        subject: "${JOB_NAME} build - Successful",
-                        body: """
-                        Build '${JOB_NAME} - ${BUILD_NUMBER}' completed successfully.
-
-                        * Check console output: [Job Console]($BUILD_URL)
-                        """
-                    )
-                }
-                failure {
-                    // Send email notification on failed builds
-                    emailext (
-                        recipientList: 'personalccount14@gmail.com',
-                        subject: "${JOB_NAME} build - Failed",
-                        body: """
-                        Build '${JOB_NAME} - ${BUILD_NUMBER}' failed.
-
-                        * Check console output: [Job Console]($BUILD_URL)
-                        * Check build logs for more details.
-                        """
-                    )
-                }
-            }    
-         }
+       
     }
 }
